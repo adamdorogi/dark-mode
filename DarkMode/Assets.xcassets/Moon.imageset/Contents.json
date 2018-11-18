@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "owlClosed.pdf",
+      "filename" : "Moon@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Moon@2x.png",
       "scale" : "2x"
     },
     {
@@ -19,6 +20,6 @@
     "author" : "xcode"
   },
   "properties" : {
-    "preserves-vector-representation" : true
+    "template-rendering-intent" : "template"
   }
 }

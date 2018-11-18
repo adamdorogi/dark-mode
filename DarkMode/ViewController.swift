@@ -15,13 +15,12 @@ class ViewController: NSViewController {
 
         self.view.frame = NSRect(x: 0, y: 0, width: 300, height: 100)
         
-        let button = NSButton(title: "Toggle", target: self, action: #selector(toggleDarkMode(_:)))
+        let button = NSButton(title: "Toggle Dark Mode", target: self, action: #selector(toggleDarkMode(_:)))
         self.view.addSubview(button)
     }
     
     @objc func toggleDarkMode(_ sender: Any) {
-        //        let script = "tell application \"System Events\" to tell appearance preferences to set dark mode to not dark mode"
-        let script = """
+        let toggleDarkModeScript = """
         tell application "System Events"
             tell appearance preferences
                 set dark mode to not dark mode
@@ -29,15 +28,7 @@ class ViewController: NSViewController {
         end tell
         """
         
-        NSAppleScript(source: script)?.executeAndReturnError(nil)
-        
-        if isEnabled() {
-            let appDelegate = NSApplication.shared.delegate as! AppDelegate
-            appDelegate.statusItem.button!.image = NSImage(named: "owlOpen")
-        } else {
-            let appDelegate = NSApplication.shared.delegate as! AppDelegate
-            appDelegate.statusItem.button!.image = NSImage(named: "owlClosed")
-        }
+        NSAppleScript(source: toggleDarkModeScript)?.executeAndReturnError(nil)
     }
     
     func isEnabled() -> Bool {
@@ -46,11 +37,5 @@ class ViewController: NSViewController {
     
     override func loadView() {
         self.view = NSView()
-    }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
     }
 }

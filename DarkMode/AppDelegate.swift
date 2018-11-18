@@ -13,20 +13,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     let popover = NSPopover()
-    
     var eventMonitor: Any?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create status bar item.
-        let image = NSImage(named: "owlOpen")
-        image?.size = NSSize(width: 20, height: 15)
         if let button = statusItem.button {
-            button.image = image
             button.action = #selector(togglePopover(_:))
         }
         
         // Set up popover view controller.
         popover.contentViewController = ViewController()
+        
+        // Add observer to interface style, to detect change in dark mode.
+        UserDefaults.standard.addObserver(self, forKeyPath: "AppleInterfaceStyle", options: [.initial, .new], context: nil)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "AppleInterfaceStyle", let button = statusItem.button {
+            // Dark mode changed, update status item button image.
+            if change?[.newKey] is NSNull {
+                button.image = NSImage(named: "Moon")
+            } else {
+                button.image = NSImage(named: "MoonDark")
+            }
+        }
     }
     
     @objc func togglePopover(_ sender: Any) {
@@ -41,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let button = statusItem.button {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             
-            // Add event monitor.
+            // Add event monitor to listen to mouse events.
             eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown], handler: { _ in
                 self.closePopover()
             })
