@@ -21,10 +21,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.action = #selector(togglePopover(_:))
         }
         
-        // Set up popover view controller.
+        // Set up and show popover view controller.
         popover.contentViewController = ViewController()
+        showPopover()
         
-        // Add observer to interface style, to detect change in dark mode.
+        // Add observer to detect change in dark mode.
         UserDefaults.standard.addObserver(self, forKeyPath: "AppleInterfaceStyle", options: [.initial, .new], context: nil)
     }
     
@@ -39,7 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    @objc func togglePopover(_ sender: Any) {
+    @objc func togglePopover(_ sender: NSStatusItem) {
         if popover.isShown {
             closePopover()
         } else {
@@ -49,10 +50,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func showPopover() {
         if let button = statusItem.button {
-            popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+            popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
             
             // Add event monitor to listen to mouse events.
-            eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown], handler: { _ in
+            eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .keyDown], handler: { _ in
                 self.closePopover()
             })
         }
