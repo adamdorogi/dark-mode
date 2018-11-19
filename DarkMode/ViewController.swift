@@ -13,16 +13,23 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up view size.
-        self.view.frame.size = CGSize(width: 300, height: 400)
-        
-        // Initialise padding.
+        // Initialise variables.
         let horizontalPadding = CGFloat(30)
         let verticalPadding = CGFloat(20)
         
+        let titleFontSize = CGFloat(28)
+        let headingFontSize = CGFloat(24)
+        let captionFontSize = CGFloat(10)
+        
+        let viewWidth = 300
+        let viewHeight = 400
+        
+        // Set up view size.
+        self.view.frame.size = CGSize(width: viewWidth, height: viewHeight)
+        
         // Set up title label.
         let titleLabel = NSTextField(labelWithString: "Night Owl")
-        titleLabel.font = .boldSystemFont(ofSize: 28)
+        titleLabel.font = .boldSystemFont(ofSize: titleFontSize)
         titleLabel.sizeToFit()
         titleLabel.frame.origin = CGPoint(x: horizontalPadding, y: self.view.frame.maxY - titleLabel.frame.maxY - verticalPadding)
         self.view.addSubview(titleLabel)
@@ -34,7 +41,7 @@ class ViewController: NSViewController {
         
         // Set up status label.
         let statusLabel = NSTextField(labelWithString: "Status")
-        statusLabel.font = .systemFont(ofSize: 10)
+        statusLabel.font = .systemFont(ofSize: captionFontSize)
         statusLabel.sizeToFit()
         statusLabel.frame.origin = CGPoint(x: self.view.frame.midX - statusLabel.frame.midX, y: toggleButton.frame.minY - statusLabel.frame.maxY)
         self.view.addSubview(statusLabel)
@@ -43,7 +50,7 @@ class ViewController: NSViewController {
         let scheduleCheckbox = NSButton()
         scheduleCheckbox.title = "Schedule"
         scheduleCheckbox.action = #selector(toggleSchedule(_:))
-        scheduleCheckbox.font = .boldSystemFont(ofSize: 24)
+        scheduleCheckbox.font = .boldSystemFont(ofSize: headingFontSize)
         scheduleCheckbox.frame.size.height = scheduleCheckbox.fittingSize.height
         scheduleCheckbox.frame.size.width = scheduleCheckbox.fittingSize.width + 14
         scheduleCheckbox.frame.origin = CGPoint(x: horizontalPadding, y: statusLabel.frame.minY - scheduleCheckbox.frame.maxY - verticalPadding)
@@ -54,7 +61,7 @@ class ViewController: NSViewController {
         let smartAdjustCheckbox = NSButton()
         smartAdjustCheckbox.action = #selector(toggleSmartAdjust(_:))
         smartAdjustCheckbox.title = "Smart Adjust"
-        smartAdjustCheckbox.font = .boldSystemFont(ofSize: 24)
+        smartAdjustCheckbox.font = .boldSystemFont(ofSize: headingFontSize)
         smartAdjustCheckbox.frame.size.height = smartAdjustCheckbox.fittingSize.height
         smartAdjustCheckbox.frame.size.width = smartAdjustCheckbox.fittingSize.width + 14
         smartAdjustCheckbox.frame.origin = CGPoint(x: horizontalPadding, y: scheduleCheckbox.frame.minY - smartAdjustCheckbox.frame.maxY - verticalPadding)
@@ -63,7 +70,7 @@ class ViewController: NSViewController {
         
         // Set up smart adjust label.
         let smartAdjustLabel = NSTextField(labelWithString: "Turn on dark mode based on screen brightness.")
-        smartAdjustLabel.font = .systemFont(ofSize: 10)
+        smartAdjustLabel.font = .systemFont(ofSize: captionFontSize)
         smartAdjustLabel.sizeToFit()
         smartAdjustLabel.frame.origin = CGPoint(x: horizontalPadding, y: smartAdjustCheckbox.frame.minY - smartAdjustLabel.frame.maxY * 1.5)
         self.view.addSubview(smartAdjustLabel)
